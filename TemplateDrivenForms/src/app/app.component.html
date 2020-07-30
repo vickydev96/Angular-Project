@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <h1>Ticket Booking System</h1>
+  <form  #userForm="ngForm" *ngIf = "!submitted"(ngSubmit) = "onSubmit()" nonvalidate >
+
+    
+    <div class="form-group">
+      <label>CreatedBy</label>
+      <input type="text" required #name = "ngModel" 
+      [class.is-invalid] ="name.invalid && name.touched"
+      class="form-control" name = "CreatedBy" [(ngModel)] = "userModel.CreatedBy">
+      <small class="text-danger" [class.d-none] = "name.valid || name.untouched">CreatedBy field is required</small>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" required #description = "ngModel"
+      [class.is-invalid] ="description.invalid && description.touched"
+      class="form-control" name = "Description" [(ngModel)] = "userModel.Description">
+      <small class="text-danger" [class.d-none] = "description.valid || description.untouched">description field is required</small>
+    </div>
+
+    <div class="form-group">
+      <label>Severity</label>
+      <input type="number" required #severity = "ngModel" pattern="^\d{4}$"
+      [class.is-invalid] = "severity.invalid && severity.touched"
+      class="form-control" name = "Severity" [(ngModel)] = "userModel.Severity">
+      <small class="text-danger" [class.d-none] = "severity.valid || severity.untouched">severity should be 4 digit</small>
+    </div>
+
+    <div class="form-group">
+      Status <select (blur) = "validateStatus(topic.value)" (change) = "validateStatus(topic.value)"  #topic = "ngModel"
+      [class.is-invalid] = "topicHasError && topic.touched"
+      class="custom-select" name = "Status" [(ngModel)] = "userModel.Status">
+        <option value="default">Select a option </option>
+        <option *ngFor="let topic of status">{{ topic }}</option>
+      </select>
+      <small class="text-danger" [class.d-none] = "!topicHasError || topic.untouched">Please choose a Status</small>
+    </div>
+
+    <div class="form-group" (click) = 'onActiveFields()'>
+      CancelledReason <select (blur) = "validateReason(reason.value)" (change) = "validateReason(reason.value)"  #reason = "ngModel"
+      [class.is-invalid] = "reasonHasError && reason.touched"
+      class="custom-select" name = "CancelledReason" [(ngModel)] = "userModel.CancelledReason" [disabled] ='CancelledReasonvalue'>
+        <option value="default">Select a option </option>
+        <option *ngFor="let reason of cancelstatus">{{ reason }}</option>
+      </select>
+      <small class="text-danger" [class.d-none] = "!reasonHasError || reason.untouched">Please choose a Reason</small>
+      
+    </div>
+
+    <div class="form-group" (click) = 'onActiveFields()'>
+      <label>CancelledOtherDescription</label>
+      <input type="text"  required #cancelleddescription = "ngModel"
+      [class.is-invalid] ="cancelleddescription.invalid && cancelleddescription.touched"
+       class="form-control" [disabled] ='CancelledOtherDescriptionvalue' name = "CancelledOtherDescription" [(ngModel)] = "userModel.CancelledOtherDescription" >
+       <small class="text-danger" [class.d-none] = "cancelleddescription.valid || cancelleddescription.untouched">Cancelleddescription field is required</small>
+      </div>
+
+    <div class="form-group" (click) = 'onActiveFields()'>
+      <label>Comments</label>
+      <input type="text"  class="form-control"  [disabled] ='CommentsDisabled' name = "Comments" [(ngModel)] = "userModel.Comments">
+    </div>
+
+      <button class="btn-primary" >Submit</button>
+  </form>
+
+</div>
